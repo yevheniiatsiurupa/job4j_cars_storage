@@ -1,17 +1,16 @@
 package ru.job4j.cars.models;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 /**
- * Класс определяет кузов машины.
+ * Класс определяет модель машины.
  * @version 1.0.
  * @since 13/09/2019.
  * @author Evgeniya Tsiurupa
  */
 @Entity
-@Table(name = "car_body")
-public class CarBody {
+@Table(name = "car_model")
+public class CarModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -20,11 +19,19 @@ public class CarBody {
     @Column(name = "name")
     private String name;
 
-    public CarBody(int id) {
+    /**
+     * Модель машины.
+     * Связь с таблицей car_make по внешнему ключу car_make_id.
+     */
+    @ManyToOne
+    @JoinColumn(name = "car_make_id")
+    private CarMake carMake;
+
+    public CarModel(int id) {
         this.id = id;
     }
 
-    public CarBody() {
+    public CarModel() {
     }
 
     public int getId() {
@@ -43,20 +50,11 @@ public class CarBody {
         this.name = name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        CarBody carBody = (CarBody) o;
-        return id == carBody.id;
+    public CarMake getCarMake() {
+        return carMake;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public void setCarMake(CarMake carMake) {
+        this.carMake = carMake;
     }
 }

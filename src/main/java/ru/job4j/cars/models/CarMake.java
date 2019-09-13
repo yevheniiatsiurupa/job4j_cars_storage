@@ -1,17 +1,20 @@
 package ru.job4j.cars.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 /**
- * Класс определяет кузов машины.
+ * Класс определяет марку машины.
  * @version 1.0.
  * @since 13/09/2019.
  * @author Evgeniya Tsiurupa
  */
 @Entity
-@Table(name = "car_body")
-public class CarBody {
+@Table(name = "car_make")
+public class CarMake {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -20,11 +23,18 @@ public class CarBody {
     @Column(name = "name")
     private String name;
 
-    public CarBody(int id) {
+    /**
+     * Поле содержит список моделей для текущей марки машины.
+     */
+    @JsonIgnore
+    @OneToMany(mappedBy = "carMake", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CarModel> models;
+
+    public CarMake(int id) {
         this.id = id;
     }
 
-    public CarBody() {
+    public CarMake() {
     }
 
     public int getId() {
@@ -43,6 +53,14 @@ public class CarBody {
         this.name = name;
     }
 
+    public List<CarModel> getModels() {
+        return models;
+    }
+
+    public void setModels(List<CarModel> models) {
+        this.models = models;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -51,8 +69,8 @@ public class CarBody {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        CarBody carBody = (CarBody) o;
-        return id == carBody.id;
+        CarMake carMake = (CarMake) o;
+        return id == carMake.id;
     }
 
     @Override

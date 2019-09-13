@@ -1,9 +1,23 @@
 package ru.job4j.cars.models;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+/**
+ * Класс определяет тип двигателя машины.
+ * @version 1.0.
+ * @since 13/09/2019.
+ * @author Evgeniya Tsiurupa
+ */
+@Entity
+@Table(name = "engine")
 public class Engine {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "name")
     private String name;
 
     public Engine(int id) {

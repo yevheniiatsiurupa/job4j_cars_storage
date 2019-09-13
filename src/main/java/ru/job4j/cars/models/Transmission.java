@@ -1,9 +1,23 @@
 package ru.job4j.cars.models;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+/**
+ * Класс определяет тип коробки передач машины.
+ * @version 1.0.
+ * @since 13/09/2019.
+ * @author Evgeniya Tsiurupa
+ */
+@Entity
+@Table(name = "transmission")
 public class Transmission {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "name")
     private String name;
 
     public Transmission(int id) {
