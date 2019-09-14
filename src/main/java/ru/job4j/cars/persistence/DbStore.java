@@ -75,6 +75,26 @@ public class DbStore {
         this.doVoid(session -> session.saveOrUpdate(account));
     }
 
+    public void addOrUpdateCarMake(CarMake carMake) {
+        this.doVoid(session -> session.saveOrUpdate(carMake));
+    }
+
+    public void addOrUpdateCarModel(CarModel carModel) {
+        this.doVoid(session -> session.saveOrUpdate(carModel));
+    }
+
+    public void addOrUpdateCarBody(CarBody carBody) {
+        this.doVoid(session -> session.saveOrUpdate(carBody));
+    }
+
+    public void addOrUpdateEngine(Engine engine) {
+        this.doVoid(session -> session.saveOrUpdate(engine));
+    }
+
+    public void addOrUpdateTransmission(Transmission tr) {
+        this.doVoid(session -> session.saveOrUpdate(tr));
+    }
+
     public void deleteAccount(Account account) {
         this.doVoid(session -> session.delete(account));
     }
@@ -178,7 +198,7 @@ public class DbStore {
         return null;
     }
 
-    public void addOrUpdateApplication(int applicationId, Car car, int accountId, String desc, String photo, boolean sold) {
+    public Application addOrUpdateApplication(int applicationId, Car car, int accountId, String desc, String photo, boolean sold) {
         final Session session = factory.openSession();
         Transaction tr = null;
         try {
@@ -187,6 +207,7 @@ public class DbStore {
             Application application = new Application(applicationId, account, car, desc, photo, sold);
             session.saveOrUpdate(application);
             tr.commit();
+            return application;
         } catch (Exception e) {
             if (tr != null) {
                 tr.rollback();
@@ -195,6 +216,7 @@ public class DbStore {
         } finally {
             session.close();
         }
+        return null;
     }
 
     /**
